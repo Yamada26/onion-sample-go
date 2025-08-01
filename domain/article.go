@@ -28,5 +28,5 @@ func NewArticle(id int, title string) (*Article, error) {
 }
 
 type ArticleRepository interface {
-	FindByID(id int) (article *Article, err error)
+	FindById(id int) (article *Article, err error)
 }

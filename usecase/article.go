@@ -10,8 +10,8 @@ func NewArticleUsecase(articleRepository domain.ArticleRepository) *ArticleUseca
 	return &ArticleUsecase{articleRepository: articleRepository}
 }
 
-func (au *ArticleUsecase) GetArticleByID(id int) (*domain.Article, error) {
-	article, err := au.articleRepository.FindByID(id)
+func (au *ArticleUsecase) GetArticleById(id int) (*domain.Article, error) {
+	article, err := au.articleRepository.FindById(id)
 	if err != nil {
 		return nil, err
 	}

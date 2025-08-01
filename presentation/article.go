@@ -19,7 +19,7 @@ func NewArticleHandler(articleUsecase *usecase.ArticleUsecase) *ArticleHandler {
 func (ah *ArticleHandler) GetArticleById(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
 
-	article, err := ah.articleUsecase.GetArticleByID(id)
+	article, err := ah.articleUsecase.GetArticleById(id)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
