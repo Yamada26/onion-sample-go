@@ -15,7 +15,7 @@ func NewRouter() *gin.Engine {
 	articleHandler := NewArticleHandler(articleUsecase)
 	router.GET("/articles/:id", articleHandler.GetArticleById)
 
-	router.GET("/health", func(ctx *gin.Context) {
+	router.GET("/healthcheck", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{"message": "successful"})
 	})
 
