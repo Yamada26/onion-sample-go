@@ -13,6 +13,11 @@ import (
 
 type StubArticleUsecase struct {
 	GetArticleByIdFunc func(id int) (*domain.Article, error)
+	CreateArticleFunc  func(article *domain.Article) (*domain.Article, error)
+}
+
+func (au *StubArticleUsecase) CreateArticle(article *domain.Article) (*domain.Article, error) {
+	return au.CreateArticleFunc(article)
 }
 
 func (au *StubArticleUsecase) GetArticleById(id int) (*domain.Article, error) {

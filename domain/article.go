@@ -16,10 +16,6 @@ func (a *Article) GetTitle() string {
 }
 
 func NewArticle(id int, title string) (*Article, error) {
-	if id <= 0 {
-		return nil, errors.New("id must be a non-negative integer")
-	}
-
 	if title == "" {
 		return nil, errors.New("title must not be empty")
 	}
@@ -28,5 +24,6 @@ func NewArticle(id int, title string) (*Article, error) {
 }
 
 type ArticleRepository interface {
-	FindById(id int) (article *Article, err error)
+	FindById(id int) (*Article, error)
+	Create(article *Article) (*Article, error)
 }

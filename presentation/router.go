@@ -13,6 +13,8 @@ func NewRouter() *gin.Engine {
 	articleRepository := infrastructure.NewArticleRepository()
 	articleUsecase := usecase.NewArticleUsecase(articleRepository)
 	articleHandler := NewArticleHandler(articleUsecase)
+
+	router.POST("/articles", articleHandler.CreateArticle)
 	router.GET("/articles/:id", articleHandler.GetArticleById)
 
 	router.GET("/healthcheck", func(ctx *gin.Context) {

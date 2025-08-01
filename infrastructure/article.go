@@ -20,6 +20,24 @@ func NewArticleRepository() *ArticleRepository {
 }
 
 /*
+指定された Article を保存する。
+保存に成功した場合は、保存された Article を返す。
+*/
+func (ar *ArticleRepository) Create(article *domain.Article) (*domain.Article, error) {
+	db := GetDB()
+	model := ArticleModel{
+		ID:    article.GetId(),
+		Title: article.GetTitle(),
+	}
+
+	if err := db.Create(&model).Error; err != nil {
+		return nil, err
+	}
+
+	return domain.NewArticle(model.ID, model.Title)
+}
+
+/*
 指定された ID の Article を取得する。
 存在しない場合は、gorm.ErrRecordNotFound を返す。
 */

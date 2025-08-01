@@ -10,10 +10,15 @@ import (
 
 type StubArticleRepository struct {
 	FindByIdFunc func(id int) (*domain.Article, error)
+	CreateFunc   func(article *domain.Article) (*domain.Article, error)
 }
 
 func (ar *StubArticleRepository) FindById(id int) (*domain.Article, error) {
 	return ar.FindByIdFunc(id)
+}
+
+func (ar *StubArticleRepository) Create(article *domain.Article) (*domain.Article, error) {
+	return ar.CreateFunc(article)
 }
 
 func TestGetArticleById_Success(t *testing.T) {
