@@ -3,14 +3,15 @@ package presentation
 import (
 	"net/http"
 	"onion-sample-go/domain"
+	"onion-sample-go/usecase"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
 type ArticleUsecase interface {
-	GetArticleById(id int) (*domain.Article, error)
-	CreateArticle(article *domain.Article) (*domain.Article, error)
+	GetArticleById(id int) (*usecase.GetArticleByIdDto, error)
+	CreateArticle(article *domain.Article) (*usecase.CreateArticleDto, error)
 }
 
 type ArticleHandler struct {
@@ -43,8 +44,8 @@ func (ah *ArticleHandler) CreateArticle(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusCreated, gin.H{
-		"id":    createdArticle.GetId(),
-		"title": createdArticle.GetTitle(),
+		"id":    createdArticle.Id,
+		"title": createdArticle.Title,
 	})
 }
 
@@ -58,7 +59,7 @@ func (ah *ArticleHandler) GetArticleById(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"id":    article.GetId(),
-		"title": article.GetTitle(),
+		"id":    article.Id,
+		"title": article.Title,
 	})
 }

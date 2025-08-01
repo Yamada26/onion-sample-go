@@ -5,6 +5,7 @@ import (
 	"net/http/httptest"
 	"onion-sample-go/domain"
 	"onion-sample-go/presentation"
+	"onion-sample-go/usecase"
 	"testing"
 
 	"github.com/gin-gonic/gin"
@@ -12,22 +13,26 @@ import (
 )
 
 type StubArticleUsecase struct {
-	GetArticleByIdFunc func(id int) (*domain.Article, error)
-	CreateArticleFunc  func(article *domain.Article) (*domain.Article, error)
+	CreateArticleFunc  func(article *domain.Article) (*usecase.CreateArticleDto, error)
+	GetArticleByIdFunc func(id int) (*usecase.GetArticleByIdDto, error)
 }
 
-func (au *StubArticleUsecase) CreateArticle(article *domain.Article) (*domain.Article, error) {
+func (au *StubArticleUsecase) CreateArticle(article *domain.Article) (*usecase.CreateArticleDto, error) {
 	return au.CreateArticleFunc(article)
 }
 
-func (au *StubArticleUsecase) GetArticleById(id int) (*domain.Article, error) {
+func (au *StubArticleUsecase) GetArticleById(id int) (*usecase.GetArticleByIdDto, error) {
 	return au.GetArticleByIdFunc(id)
 }
 
 func TestGetArticleById_Success(t *testing.T) {
 	mockUsecase := &StubArticleUsecase{
-		GetArticleByIdFunc: func(id int) (*domain.Article, error) {
-			return domain.NewArticle(id, "Test Article")
+		GetArticleByIdFunc: func(id int) (*usecase.GetArticleByIdDto, error) {
+			article, _ := domain.NewArticle(id, "Test Article")
+			return &usecase.GetArticleByIdDto{
+				Id:    article.GetId(),
+				Title: article.GetTitle(),
+			}, nil
 		},
 	}
 

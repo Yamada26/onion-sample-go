@@ -10,10 +10,30 @@ func NewArticleUsecase(ar domain.ArticleRepository) *ArticleUsecase {
 	return &ArticleUsecase{articleRepository: ar}
 }
 
-func (au *ArticleUsecase) CreateArticle(article *domain.Article) (*domain.Article, error) {
-	return au.articleRepository.Create(article)
+type CreateArticleDto struct {
+	Id    int
+	Title string
 }
 
-func (au *ArticleUsecase) GetArticleById(id int) (*domain.Article, error) {
-	return au.articleRepository.FindById(id)
+func (au *ArticleUsecase) CreateArticle(article *domain.Article) (*CreateArticleDto, error) {
+	createdArticle, _ := au.articleRepository.Create(article)
+
+	return &CreateArticleDto{
+		Id:    createdArticle.GetId(),
+		Title: createdArticle.GetTitle(),
+	}, nil
+}
+
+type GetArticleByIdDto struct {
+	Id    int
+	Title string
+}
+
+func (au *ArticleUsecase) GetArticleById(id int) (*GetArticleByIdDto, error) {
+	article, _ := au.articleRepository.FindById(id)
+
+	return &GetArticleByIdDto{
+		Id:    article.GetId(),
+		Title: article.GetTitle(),
+	}, nil
 }
