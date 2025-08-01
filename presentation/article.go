@@ -2,18 +2,22 @@ package presentation
 
 import (
 	"net/http"
-	"onion-sample-go/usecase"
+	"onion-sample-go/domain"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
-type ArticleHandler struct {
-	articleUsecase *usecase.ArticleUsecase
+type ArticleUsecase interface {
+	GetArticleById(id int) (*domain.Article, error)
 }
 
-func NewArticleHandler(articleUsecase *usecase.ArticleUsecase) *ArticleHandler {
-	return &ArticleHandler{articleUsecase: articleUsecase}
+type ArticleHandler struct {
+	articleUsecase ArticleUsecase
+}
+
+func NewArticleHandler(au ArticleUsecase) *ArticleHandler {
+	return &ArticleHandler{articleUsecase: au}
 }
 
 func (ah *ArticleHandler) GetArticleById(ctx *gin.Context) {

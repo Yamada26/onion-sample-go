@@ -10,7 +10,7 @@ import (
 func NewRouter() *gin.Engine {
 	router := gin.Default()
 
-	articleRepository := &infrastructure.ArticleRepository{}
+	articleRepository := infrastructure.NewArticleRepository()
 	articleUsecase := usecase.NewArticleUsecase(articleRepository)
 	articleHandler := NewArticleHandler(articleUsecase)
 	router.GET("/articles/:id", articleHandler.GetArticleById)
